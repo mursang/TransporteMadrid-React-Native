@@ -24,7 +24,6 @@ export const searchStop = (text) => {
 				//GO TO DETAIL SCENE.
 				Actions.busTimes();
 			}else{
-				console.log(results.payload.error);
 				dispatch({
 					type: 'ERROR_RESULTS'
 				});
@@ -32,6 +31,19 @@ export const searchStop = (text) => {
 
 		});
 	};
+};
+
+export const getFavorites = () => {
+	return (dispatch) => {
+		AsyncStorage.getItem(Constants.favoritesKey).then((object) => {
+			if (object != "null" && object){
+				var array = JSON.parse(object);
+				dispatch({type: 'GOT_FAVORITES', payload: array});
+			}else{
+				dispatch({type: 'GOT_FAVORITES', payload: []});
+			}
+		});
+	}
 };
 
 export const resetFavorite = () => {
@@ -46,28 +58,25 @@ export const checkFavorite = (arrives) => {
 		AsyncStorage.getItem(Constants.favoritesKey).then((object) => { 
 			if (object != "null" && object){
 				//lets check.
-
 				var myArray = JSON.parse(object);
-				console.log(myArray);
 				var finished = false;
 				myArray.forEach((value) => {
 					var myStop = value.stopNumber;
 					if (stopNumber == myStop){
-						console.log("stopNumber "+stopNumber+" is equal to: "+myStop);
-						console.log("Activating favorite");
-						dispatch({type: 'ADD_FAVORITE'});
+						//need this to get the main thread and update the image.
+						setTimeout(() => {
+					      dispatch({type: 'ADD_FAVORITE'});
+					    }, 10);
 						finished = true;
 					}
 				});
 				
 				if (!finished){
-					console.log("REMOVE FAV");
 					dispatch({type: 'REMOVE_FAVORITE'});
 				}
 				
 			}else{
 				//not favorited.
-				console.log("REMOVE FAV not favorited");
 				dispatch({type: 'REMOVE_FAVORITE'});
 			}
 		});
