@@ -57,10 +57,10 @@ class EMTComponent extends Component {
 		}
 	}
 
+
 	renderRow(fav){
 		return  <BusFavoriteItem fav={fav} onPress={() => {
-			this.props.busNumberChanged(fav.stopNumber);
-			this.submit();
+			this.props.searchStop(fav.stopNumber);
 		}}/>;
 	}
 
