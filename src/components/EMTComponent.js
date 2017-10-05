@@ -11,7 +11,6 @@ import BusFavoriteItem from './BusFavoriteItem';
 class EMTComponent extends Component {
 
 	componentWillMount(){
-		//get favs.
 		this.props.getFavorites();
 		this.initListView(this.props);
 	}
@@ -64,7 +63,7 @@ class EMTComponent extends Component {
 		}}/>;
 	}
 
-	showAlert() {
+	showErrorAlert() {
 		if (this.props.errorMessage != null){
 			//let loading screen some time to disappear
 			setTimeout(() => {
@@ -79,7 +78,7 @@ class EMTComponent extends Component {
 		return(
 			<View style={styles.mainContainerStyle}>
 				<Spinner visible={this.props.loading} textContent={"Cargando..."} textStyle={{color: 'white'}} />
-				{this.showAlert()}
+				{this.showErrorAlert()}
 				<View>
 					<Input 
 					placeholder="Número de parada" 
@@ -92,10 +91,7 @@ class EMTComponent extends Component {
 							Mis paradas favoritas
 						</Text>
 					</View>
-					
-					
 				</View>
-					
 				{this.showFavoritesView()}
 			</View>
 			

@@ -17,8 +17,7 @@ export const parseTimeFromStopNumber = (text, callback) => {
 				callback(res);
 				return;
 			}
-
-			var myArrives = result.Arrives.Arrive; //Array of objects.
+			var myArrives = result.Arrives.Arrive;
 			var res = {status: true, payload: myArrives};
 		    callback(res);
 		});
