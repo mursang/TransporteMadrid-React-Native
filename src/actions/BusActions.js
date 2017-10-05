@@ -25,7 +25,8 @@ export const searchStop = (text) => {
 				Actions.busTimes();
 			}else{
 				dispatch({
-					type: 'ERROR_RESULTS'
+					type: 'ERROR_RESULTS',
+					payload: results.payload
 				});
 			}
 

@@ -12,13 +12,18 @@ export const parseTimeFromStopNumber = (text, callback) => {
 	.then((response) => {
 		var xml = response._bodyText;
 		parseString(xml, function (err, result) {
+			if (result.Arrives == ""){
+				var res = {status: false, payload: "Parada no válida"}
+				callback(res);
+				return;
+			}
+
 			var myArrives = result.Arrives.Arrive; //Array of objects.
 			var res = {status: true, payload: myArrives};
 		    callback(res);
 		});
 	})
 	.catch((error) => {
-		console.log(error);
 		var res = {status: false, payload: error};
 		callback(res);
 	});

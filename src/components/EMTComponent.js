@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text, View, TextInput, ListView } from 'react-native';
+import { Text, View, TextInput, ListView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Input } from './common';
 import Constants from '../Constants';
@@ -64,10 +64,22 @@ class EMTComponent extends Component {
 		}}/>;
 	}
 
+	showAlert() {
+		if (this.props.errorMessage != null){
+			//let loading screen some time to disappear
+			setTimeout(() => {
+				Alert.alert(
+	         	'Vaya.. parece que hay algún problema'
+	      		);
+			}, 100);
+		}
+	}
+
 	render(){
 		return(
 			<View style={styles.mainContainerStyle}>
 				<Spinner visible={this.props.loading} textContent={"Cargando..."} textStyle={{color: 'white'}} />
+				{this.showAlert()}
 				<View>
 					<Input 
 					placeholder="Número de parada" 
@@ -125,8 +137,8 @@ const styles={
 };
 
 const mapStateToProps = (state) => {
-	const { busStopNumber, loading, favoritesList } = state.bus;
-	return { busStopNumber, loading, favoritesList };
+	const { busStopNumber, loading, favoritesList, errorMessage } = state.bus;
+	return { busStopNumber, loading, favoritesList, errorMessage };
 };
 
 export default connect(mapStateToProps, { busNumberChanged, searchStop, getFavorites })(EMTComponent);
