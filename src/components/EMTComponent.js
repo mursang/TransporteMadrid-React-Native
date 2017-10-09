@@ -3,7 +3,7 @@ import { Text, View, TextInput, ListView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Input } from './common';
 import Constants from '../Constants';
-import { busNumberChanged, searchStop, getFavorites } from '../actions';
+import { busNumberChanged, searchStop, getFavorites, resetRefresh } from '../actions';
 import Spinner from 'react-native-loading-spinner-overlay';
 import BusFavoriteItem from './BusFavoriteItem';
 
@@ -16,7 +16,13 @@ class EMTComponent extends Component {
 	}
 
 	componentWillReceiveProps(nextProps){
+		if (nextProps.refresh && !this.props.refresh){
+			this.props.getFavorites();
+			this.props.resetRefresh();
+		}
 		this.initListView(nextProps);
+		
+		
 	}
 
 	initListView(props){
@@ -116,7 +122,7 @@ const styles={
 	viewFavorites: {
 		backgroundColor: 'white', 
 		height: 40, 
-		marginTop: 50
+		marginTop: 70
 	},
 	textHeaderFavorites: {
 		color: Constants.blueColor, 
@@ -133,8 +139,8 @@ const styles={
 };
 
 const mapStateToProps = (state) => {
-	const { busStopNumber, loading, favoritesList, errorMessage } = state.bus;
-	return { busStopNumber, loading, favoritesList, errorMessage };
+	const { busStopNumber, loading, favoritesList, errorMessage, refresh } = state.bus;
+	return { busStopNumber, loading, favoritesList, errorMessage, refresh };
 };
 
-export default connect(mapStateToProps, { busNumberChanged, searchStop, getFavorites })(EMTComponent);
+export default connect(mapStateToProps, { busNumberChanged, searchStop, getFavorites, resetRefresh })(EMTComponent);

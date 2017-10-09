@@ -1,4 +1,4 @@
-const INITIAL_STATE = { busStopNumber: '', loading: false, arrives: {}, imageUri: require('../images/star_empty.png'), favoritesList: [], errorMessage: null};
+const INITIAL_STATE = { busStopNumber: '', loading: false, arrives: {}, imageUri: require('../images/star_empty.png'), favoritesList: [], errorMessage: null, refresh: false};
 
 export default (state = INITIAL_STATE, action) => {
 	switch (action.type){
@@ -16,6 +16,10 @@ export default (state = INITIAL_STATE, action) => {
 			return {...state, imageUri: require('../images/star_empty.png'), errorMessage: null};
 		case 'GOT_FAVORITES':
 			return {...state, favoritesList: action.payload, errorMessage: null};
+		case 'REFRESH_VIEW':
+			return {...state, refresh: true};
+		case 'RESET_REFRESH':
+			return {...state, refresh: false};
 		default:
 			return state;
 	}

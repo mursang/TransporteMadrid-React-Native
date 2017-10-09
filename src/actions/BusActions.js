@@ -10,6 +10,11 @@ export const busNumberChanged = (text) => {
 	};
 };
 
+export const resetRefresh = () => {
+	return {
+		type: 'RESET_REFRESH'
+	};
+};
 
 export const searchStop = (text) => {
 	return (dispatch) => {
@@ -22,7 +27,13 @@ export const searchStop = (text) => {
 					payload: results.payload
 				});
 				//GO TO DETAIL SCENE.
-				Actions.busTimes();
+				Actions.busTimes({
+					onBack: () => {
+
+						Actions.pop();
+						dispatch({type: 'REFRESH_VIEW'});
+					}
+				});
 			}else{
 				dispatch({
 					type: 'ERROR_RESULTS',
@@ -37,9 +48,13 @@ export const searchStop = (text) => {
 export const getFavorites = () => {
 	return (dispatch) => {
 		AsyncStorage.getItem(Constants.favoritesKey).then((object) => {
-			if (object != "null" && object){
-				var array = JSON.parse(object);
-				dispatch({type: 'GOT_FAVORITES', payload: array});
+			if (object != "null" && object){ 
+				try{
+					var array = JSON.parse(object);
+					dispatch({type: 'GOT_FAVORITES', payload: array});
+				}catch(err){
+					dispatch({type: 'GOT_FAVORITES', payload: []});
+				}				
 			}else{
 				dispatch({type: 'GOT_FAVORITES', payload: []});
 			}

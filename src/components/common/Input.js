@@ -14,9 +14,10 @@ const Input = ({value, placeholder, onChangeText, onSubmitEditing, returnKeyType
 				style={inputStyle}
 				value={value}
 				onChangeText={onChangeText}
-				placeholderTextColor={Constants.blueColor}
+				placeholderTextColor="black"
 				onSubmitEditing={onSubmitEditing}
 				returnKeyType={returnKeyType}
+				underlineColorAndroid='transparent'
 			/>
 		</View>
 	);
@@ -28,12 +29,15 @@ const styles = {
 		paddingRight: 70,
 		paddingLeft: 70,
 		fontSize: 18,
-		height:40,
+		height:50,
+		width: 320,
+		borderBottomWidth: 0,
 		textAlign: 'center',
 		borderWidth: 2,
 		borderColor: Constants.blueColor,
 		borderRadius: 20,
-		backgroundColor: 'white'
+		backgroundColor: 'white',
+		marginTop: 10
 	},
 	containerStyle: {
 		flex: 1,
