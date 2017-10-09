@@ -34,7 +34,6 @@ export const searchStop = (text) => {
 				//GO TO DETAIL SCENE.
 				Actions.busTimes({
 					onBack: () => {
-
 						Actions.pop();
 						dispatch({type: 'REFRESH_VIEW'});
 					}
@@ -49,6 +48,8 @@ export const searchStop = (text) => {
 		});
 	};
 };
+
+
 
 export const getFavorites = () => {
 	return (dispatch) => {
@@ -170,7 +171,25 @@ export const addFavorite = (arrives) => {
 			}
 		});
 	}
-	
+};
 
-	
+
+
+export const refreshListView = (text) => {
+	return (dispatch) => {
+		dispatch({type:'REFRESHING_LIST'});
+
+		parseTimeFromStopNumber(text, function(results){
+			console.log(results);
+			if (results.status){
+				console.log("GOT RESULTS");
+				dispatch({
+					type: 'GOT_STOP_RESULTS',
+					payload: results.payload
+				});
+				console.log("RESETTING");
+				dispatch({type:'RESET_REFRESH'});
+			}
+		});
+	}
 };
