@@ -23,6 +23,7 @@ export const resetRefresh = () => {
 
 export const searchStop = (text) => {
 	return (dispatch) => {
+		dispatch({type: 'BUS_NUMBER_CHANGED', payload: text})
 		dispatch({type: 'SEARCH_STOP_NUMBER'});
 
 		parseTimeFromStopNumber(text, function(results){
@@ -178,16 +179,12 @@ export const addFavorite = (arrives) => {
 export const refreshListView = (text) => {
 	return (dispatch) => {
 		dispatch({type:'REFRESHING_LIST'});
-
 		parseTimeFromStopNumber(text, function(results){
-			console.log(results);
 			if (results.status){
-				console.log("GOT RESULTS");
 				dispatch({
 					type: 'GOT_STOP_RESULTS',
 					payload: results.payload
 				});
-				console.log("RESETTING");
 				dispatch({type:'RESET_REFRESH'});
 			}
 		});
