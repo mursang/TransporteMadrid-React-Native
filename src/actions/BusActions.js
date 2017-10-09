@@ -4,6 +4,11 @@ import {AsyncStorage} from 'react-native';
 import Constants from '../Constants';
 
 export const busNumberChanged = (text) => {
+	//Accept only numbers.
+	var isnum = /^\d+$/.test(text);
+	if (!isnum && text != ""){
+		return{ type: '' };
+	}
 	return {
 		type: 'BUS_NUMBER_CHANGED',
 		payload: text
